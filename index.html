@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songo Pro Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+    <audio id="sound-sow" src="https://assets.mixkit.co/active_storage/sfx/2004/2004-84.wav" preload="auto"></audio>
+    <audio id="sound-capture" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-84.wav" preload="auto"></audio>
+    <audio id="sound-victory" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-84.wav" preload="auto"></audio>
+
+    <nav class="top-nav">
+        <div class="lang-switch">
+            <button id="btn-fr" class="active">FR</button>
+            <button id="btn-en">EN</button>
+        </div>
+        <div class="menu-burger" id="burger-icon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <div id="rules-sidebar" class="sidebar">
+        <div class="sidebar-close" id="sidebar-close-btn">&times;</div>
+        <h2 id="txt-rules-title">Comment jouer ?</h2>
+        <p id="txt-rules-desc">Le Songo se joue à 2. Chaque joueur possède une rangée de 7 trous. Au départ, chaque trou contient 5 graines. À votre tour, choisissez un trou dans votre camp, ramassez les graines et distribuez-les une par une dans le sens des aiguilles d'une montre. Si votre dernière graine tombe chez l'adversaire et que le trou contient 2, 3 ou 4 graines, vous les capturez !</p>
+    </div>
+
+    <main>
+        <section id="welcome-section" class="welcome-container">
+            <div class="hero-overlay">
+                <h1 id="txt-title">SONGO TRADITIONNEL</h1>
+                <p id="txt-subtitle">Dominez le tablier ancestral</p>
+                
+                <div class="menu-buttons" id="main-menu-buttons">
+                    <button id="btn-pve" class="btn">
+                        <i class="fa-solid fa-user-astronaut"></i> VS <i class="fa-solid fa-robot"></i> <span id="lbl-pve">Joueur contre Machine</span>
+                    </button>
+                    <button id="btn-pvp-menu" class="btn">
+                        <i class="fa-solid fa-users"></i> <span id="lbl-pvp">Joueur contre Joueur (En ligne)</span>
+                    </button>
+                </div>
+
+                <div id="online-setup-zone" class="hidden" style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px;">
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="user-pseudo" placeholder="Entre ton pseudo" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; width: 80%; max-width: 250px; font-size: 15px; text-align: center;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <button id="btn-create-room" class="btn" style="max-width: 250px;"><i class="fa-solid fa-plus"></i> Créer un Salon Privé</button>
+                        <span style="color: #aaa; font-size: 13px;">— OU REJOINDRE —</span>
+                        <div>
+                            <input type="text" id="room-code-input" placeholder="CODE" style="padding: 10px; width: 100px; text-align: center; border-radius: 5px; text-transform: uppercase; font-weight: bold;">
+                            <button id="btn-join-room" class="btn" style="display: inline-block; width: auto; margin-left: 10px; padding: 10px 15px;">Rejoindre</button>
+                        </div>
+                    </div>
+                    <button id="btn-cancel-online" class="btn-secondary" style="margin-top: 15px; font-size: 13px;">Retour</button>
+                </div>
+            </div>
+        </section>
+
+        <div id="difficulty-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="txt-modal-title">Choisir la difficulté</h3>
+                <div class="difficulty-options">
+                    <button class="btn-diff easy" data-diff="facile"><i class="fa-solid fa-baby"></i> <span id="lbl-easy">Facile</span></button>
+                    <button class="btn-diff normal" data-diff="normal"><i class="fa-solid fa-graduation-cap"></i> <span id="lbl-normal">Normal</span></button>
+                    <button class="btn-diff hard" data-diff="hard"><i class="fa-solid fa-skull-crossbones"></i> <span id="lbl-hard">Difficile</span></button>
+                </div>
+                <button id="btn-close-modal" class="btn-secondary">Annuler</button>
+            </div>
+        </div>
+
+        <section id="game-section" class="game-container hidden">
+            <div class="scoreboard">
+                <div id="room-code-display-zone" style="text-align: center; color: #f1c40f; margin-bottom: 10px; font-weight: bold;" class="hidden">
+                    Code du Salon : <span id="display-room-code">----</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-around; width: 100%;">
+                    <div class="score-box p1-color">
+                        <i class="fa-solid fa-user"></i> <span id="txt-p1-name">Joueur 1</span> : <span id="score-p1">0</span>/36
+                        <div class="win-counter" style="font-size: 11px; color: #bbb; margin-top: 3px;">Victoires : <span id="wins-p1">0</span></div>
+                    </div>
+                    <div id="turn-indicator" style="align-self: center;">Tour : Joueur 1</div>
+                    <div class="score-box p2-color">
+                        <i class="fa-solid fa-user-ninja" id="icon-p2"></i> <span id="txt-p2-name">Joueur 2</span><span id="diff-span"></span> : <span id="score-p2">0</span>/36
+                        <div class="win-counter" style="font-size: 11px; color: #bbb; margin-top: 3px;">Victoires : <span id="wins-p2">0</span></div>
+                    </div>
+                </div>
+                
+                <div id="clear-stats-zone" style="text-align: center; margin-top: 8px;" class="hidden">
+                    <button id="btn-clear-stats" style="background: none; border: none; color: #ff7675; cursor: pointer; text-decoration: underline; font-size: 11px;">Réinitialiser l'historique des victoires</button>
+                </div>
+            </div>
+
+            <div id="capture-alert" class="capture-flash hidden"></div>
+
+            <div id="hint-area" class="hint-container hidden">
+                <button id="btn-hint" class="btn-hint">
+                    <i class="fa-solid fa-lightbulb"></i> <span id="txt-hint-btn">Obtenir un indice</span> (<span id="hint-count">4</span>)
+                </button>
+            </div>
+
+            <div class="songo-board">
+                <div class="row player2-row">
+                    <div class="hole" data-index="13" data-count="5"></div>
+                    <div class="hole" data-index="12" data-count="5"></div>
+                    <div class="hole" data-index="11" data-count="5"></div>
+                    <div class="hole" data-index="10" data-count="5"></div>
+                    <div class="hole" data-index="9" data-count="5"></div>
+                    <div class="hole" data-index="8" data-count="5"></div>
+                    <div class="hole" data-index="7" data-count="5"></div>
+                </div>
+
+                <div class="row player1-row">
+                    <div class="hole" data-index="0" data-count="5"></div>
+                    <div class="hole" data-index="1" data-count="5"></div>
+                    <div class="hole" data-index="2" data-count="5"></div>
+                    <div class="hole" data-index="3" data-count="5"></div>
+                    <div class="hole" data-index="4" data-count="5"></div>
+                    <div class="hole" data-index="5" data-count="5"></div>
+                    <div class="hole" data-index="6" data-count="5"></div>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button id="btn-back" class="btn-secondary"><i class="fa-solid fa-arrow-left"></i> Quitter</button>
+                <button id="btn-reset" class="btn-reset"><i class="fa-solid fa-rotate-right"></i> Réinitialiser</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="victory-screen" class="winner-overlay hidden">
+        <i class="fa-solid fa-trophy" style="color: gold; font-size: 80px; margin-bottom: 20px;"></i>
+        <h1 id="victory-msg">Félicitations !</h1>
+        <button id="btn-restart" class="btn">Rejouer</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
