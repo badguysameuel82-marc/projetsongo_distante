@@ -1,0 +1,267 @@
+/* DESIGN SOMBRE PREMIUM */
+:root {
+    --bg-dark: #121212;
+    --card-dark: #1E1E1E;
+    --wood-board: #5D4037;
+    --wood-dark: #2D1A14;
+    --text-light: #E0E0E0;
+    --accent-gold: #FFD700;
+    --hint-glow: #00E676;
+}
+
+body.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR & BURGER MENU */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: rgba(0,0,0,0.5);
+    z-index: 10;
+    height: 30px;
+}
+
+.lang-switch button {
+    background: #333;
+    color: #aaa;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.lang-switch button.active {
+    background: var(--accent-gold);
+    color: #000;
+}
+
+.menu-burger {
+    font-size: 28px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.menu-burger:hover {
+    color: var(--accent-gold);
+}
+
+/* LE MENU DES RÈGLES COULISSANT (SIDEBAR) */
+.sidebar {
+    position: fixed;
+    top: 0; right: -350px;
+    width: 300px; height: 100%;
+    background: #1A1A1A;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.7);
+    z-index: 100;
+    padding: 30px;
+    transition: right 0.4s cubic-bezier(0.05, 0.74, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.sidebar-close {
+    font-size: 35px;
+    color: #777;
+    cursor: pointer;
+    text-align: right;
+}
+
+.sidebar-close:hover { color: white; }
+
+/* ÉCRAN D'ACCUEIL COMPLET AVEC TA PHOTO IMMERSIVE LOCALE */
+.welcome-container {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(18, 18, 18, 0.35), rgba(18, 18, 18, 0.65)), 
+                url('songo.jpg') center/cover no-repeat;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.hero-overlay {
+    text-align: center;
+    z-index: 2;
+    background: rgba(30, 30, 30, 0.85);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+.hero-overlay h1 {
+    font-size: 45px;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    margin: 0 0 10px 0;
+}
+
+/* GRAINES DÉCORATIVES */
+.decorations { position: absolute; width: 100%; height: 100%; top:0; left:0; pointer-events: none; }
+.dec-seed {
+    position: absolute; width: 16px; height: 16px;
+    background: radial-gradient(circle at 35% 35%, #E6C280, #8B5A2B, #4A2E14);
+    border-radius: 50%; box-shadow: 2px 4px 6px rgba(0,0,0,0.7); opacity: 0.5;
+}
+.s1 { top: 15%; left: 10%; transform: rotate(12deg); }
+.s2 { top: 75%; left: 15%; transform: rotate(45deg); }
+.s3 { top: 25%; right: 12%; }
+.s4 { bottom: 20%; right: 25%; }
+.s5 { top: 60%; right: 8%; }
+.s6 { bottom: 10%; left: 45%; }
+
+/* ZONE DU JEU */
+.game-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; max-width: 800px;
+    font-size: 20px; font-weight: bold;
+    margin-bottom: 20px;
+    background: var(--card-dark);
+    padding: 15px; border-radius: 12px;
+    border: 1px solid #333;
+}
+
+#turn-indicator {
+    background: #2A2A2A;
+    padding: 6px 18px; border-radius: 20px;
+    border: 1px solid var(--accent-gold);
+}
+
+/* ALERTE DE CAPTURE VISUELLE SURGISSANTE */
+.capture-flash {
+    background: rgba(211, 47, 47, 0.95);
+    color: white;
+    padding: 8px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 17px;
+    animation: popAlert 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--accent-gold);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+@keyframes popAlert {
+    0% { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* BOUTON D'INDICE */
+.hint-container { margin-bottom: 15px; }
+.btn-hint {
+    background: #2E7D32; color: white; border: none; padding: 10px 20px;
+    font-size: 15px; border-radius: 20px; cursor: pointer; font-weight: bold;
+}
+.btn-hint:hover { background: #388E3C; }
+.btn-hint:disabled { background: #424242; color: #777; cursor: not-allowed; }
+
+/* LE TABLIER ET LES TROUS */
+.songo-board {
+    background-color: var(--wood-board);
+    border: 12px solid var(--wood-dark);
+    border-radius: 25px; padding: 25px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 20px 40px rgba(0,0,0,0.6);
+    display: flex; flex-direction: column; gap: 40px;
+    margin-bottom: 20px;
+}
+.row { display: flex; gap: 20px; }
+.hole {
+    width: 85px; height: 85px; background-color: var(--wood-dark); border-radius: 50%;
+    box-shadow: inset 0 12px 20px rgba(0,0,0,0.95); display: flex; flex-wrap: wrap;
+    align-content: center; justify-content: center; padding: 8px; box-sizing: border-box;
+    gap: 3px; cursor: pointer; position: relative; transition: transform 0.2s;
+}
+.hole:hover { transform: scale(1.06); }
+
+/* Éclats lumineux fonctionnels */
+.hole.hint-active {
+    box-shadow: inset 0 0 0 4px var(--hint-glow), 0 0 20px var(--hint-glow);
+    animation: pulseGlow 1.2s infinite alternate;
+}
+@keyframes pulseGlow { from { transform: scale(1); } to { transform: scale(1.04); } }
+
+.hole.sowing-active { box-shadow: inset 0 0 18px var(--accent-gold), 0 0 18px var(--accent-gold); }
+
+.hole.captured-active {
+    box-shadow: inset 0 0 25px #D32F2F, 0 0 25px #D32F2F !important;
+    animation: shakeHole 0.3s ease;
+}
+@keyframes shakeHole {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+.hole::after {
+    content: attr(data-count); position: absolute; bottom: -24px; left: 50%;
+    transform: translateX(-50%); color: #888; font-weight: bold; font-size: 13px;
+}
+
+/* LES GRAINES INTERNES */
+.seed {
+    width: 13px; height: 13px;
+    background: radial-gradient(circle at 35% 35%, #F5F5F5, #A1887F, #3E2723);
+    border-radius: 50%; box-shadow: 1px 2px 3px rgba(0,0,0,0.8);
+    animation: dropSeed 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+@keyframes dropSeed { 0% { transform: translateY(-15px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+/* BOUTONS ET COMPOSANTS PANNEAUX */
+.btn {
+    background-color: #3E2723; color: white; border: 1px solid #5D4037;
+    padding: 14px 28px; font-size: 16px; font-weight: bold; border-radius: 30px;
+    cursor: pointer; margin: 10px; display: inline-flex; align-items: center; gap: 10px;
+}
+.btn:hover { background-color: var(--wood-board); }
+.btn-secondary { background: #333; color: #ccc; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; }
+
+/* Bouton Spécifique Reset */
+.game-controls { display: flex; gap: 15px; margin-top: 10px; }
+.btn-reset {
+    background: #E65100; color: white; border: none; padding: 10px 20px;
+    border-radius: 20px; cursor: pointer; font-weight: bold; transition: background 0.2s;
+}
+.btn-reset:hover { background: #F57C00; }
+
+/* POP-UP CHOIX DE DIFFICULTÉ */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 150; }
+.modal-content { background: #1E1E1E; padding: 30px; border-radius: 20px; border: 1px solid #444; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+.modal-content h3 { margin-top: 0; color: var(--accent-gold); font-size: 24px; }
+.difficulty-options { display: flex; flex-direction: column; gap: 15px; margin: 25px 0; }
+.btn-diff { padding: 12px; font-size: 16px; font-weight: bold; border-radius: 10px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; color: white; }
+.easy { background: #00897B; }
+.normal { background: #F57C00; }
+.hard { background: #D32F2F; }
+
+.hidden { display: none !important; }
+.winner-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
